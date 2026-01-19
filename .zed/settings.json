@@ -1,0 +1,22 @@
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{
+  "prettier": {
+    "allowed": false,
+  },
+  "hard_tabs": false,
+  "tab_size": 4,
+  "ensure_final_newline_on_save": true,
+  "remove_trailing_whitespace_on_save": true,
+  "preferred_line_length": 140,
+  "show_wrap_guides": true,
+  "wrap_guides": [140],
+  "languages": {
+    "Markdown": {
+      "remove_trailing_whitespace_on_save": false,
+      "soft_wrap": "editor_width",
+    },
+  },
+}

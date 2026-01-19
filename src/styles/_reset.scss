@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Прибираємо зовнішні та внутрішні відступи у всього */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Скидаємо специфічні браузерні стилі для списків */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Скидаємо налаштування шрифтів для елементів форм,
+   щоб вони не мали власних системних шрифтів */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Прибираємо дефолтне підкреслення та колір посилань */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Робимо медіа-елементи гнучкими, але без зміни їхнього display за замовчуванням */
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Скидаємо таблиці */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
