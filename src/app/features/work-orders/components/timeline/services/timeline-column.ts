@@ -2,7 +2,7 @@ import {computed, Injectable, InputSignal} from "@angular/core";
 import {ZoomLevel} from "../../../models/zoom-level";
 import {WorkOrderDocument} from "../../../models/work-order-document";
 
-interface Column {
+export interface TimelineColumnItem {
     label: string;
     date: Date;
     isCurrent?: boolean;
@@ -18,7 +18,7 @@ export class TimelineColumn {
 
         const { startDate, endDate } = this._getDateRange(orders);
 
-        const zoomLevel: Record<ZoomLevel, () => Column[]> = {
+        const zoomLevel: Record<ZoomLevel, () => TimelineColumnItem[]> = {
             hour: () => this._hour(startDate, endDate),
             day: () => this._day(startDate, endDate),
             week: () => this._week(startDate, endDate),
@@ -68,8 +68,8 @@ export class TimelineColumn {
         return date.toDateString() === now.toDateString() && date.getHours() === now.getHours();
     }
 
-    private _month(startDate: Date, endDate: Date): Column[] {
-        const columns: Column[] = [];
+    private _month(startDate: Date, endDate: Date): TimelineColumnItem[] {
+        const columns: TimelineColumnItem[] = [];
 
         const startYear = startDate.getFullYear();
         const startMonth = startDate.getMonth();
@@ -93,8 +93,8 @@ export class TimelineColumn {
         return columns;
     }
 
-    private _week(startDate: Date, endDate: Date): Column[] {
-        const columns: Column[] = [];
+    private _week(startDate: Date, endDate: Date): TimelineColumnItem[] {
+        const columns: TimelineColumnItem[] = [];
 
         // Start from the beginning of the week containing startDate
         const current = new Date(startDate);
@@ -127,8 +127,8 @@ export class TimelineColumn {
         return columns;
     }
 
-    private _day(startDate: Date, endDate: Date): Column[] {
-        const columns: Column[] = [];
+    private _day(startDate: Date, endDate: Date): TimelineColumnItem[] {
+        const columns: TimelineColumnItem[] = [];
 
         const current = new Date(startDate);
         current.setHours(0, 0, 0, 0);
@@ -147,8 +147,8 @@ export class TimelineColumn {
         return columns;
     }
 
-    private _hour(startDate: Date, endDate: Date): Column[] {
-        const columns: Column[] = [];
+    private _hour(startDate: Date, endDate: Date): TimelineColumnItem[] {
+        const columns: TimelineColumnItem[] = [];
 
         const current = new Date(startDate);
         current.setMinutes(0, 0, 0);

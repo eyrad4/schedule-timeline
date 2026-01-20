@@ -4,22 +4,50 @@
 @use './app/styles/variables';
 
 html {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  font-family:
-    'Circular Std',
+    font-family: 'Circular Std',
     'Inter',
     system-ui,
     -apple-system,
     sans-serif;
-  color: var(--color-primary);
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
 
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  min-height: 100vh;
-  background-color: var(--color-white);
+    min-height: 100vh;
+    background-color: var(--color-white);
 }
+
+.dropdown-menu.show {
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid rgba(104, 113, 150, 0.1);
+    box-shadow: 0 0 0 1px rgba(104, 113, 150, 0.1),
+    0 2.5px 3px -1.5px rgba(200, 207, 233, 1),
+    0 4.5px 5px -1px rgba(216, 220, 235, 1);
+    background-color: rgba(255, 255, 255, 1);
+    padding: 12px 0;
+
+    .dropdown-item {
+        padding: 5px 12px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        background-color: unset;
+        color: var(--color-purple-900);
+
+        &:hover {
+            color: var(--color-purple-700);
+        }
+    }
+}
+
+

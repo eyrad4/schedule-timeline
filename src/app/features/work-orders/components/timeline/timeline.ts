@@ -1,4 +1,4 @@
-import {Component, effect, ElementRef, inject, input, viewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, viewChild} from '@angular/core';
 import {WorkOrderDocument} from "../../models/work-order-document";
 import {TimelineColumn} from "./services/timeline-column";
 import {TimelinePosition} from "./directives/timeline-position";
@@ -6,11 +6,12 @@ import {ZoomLevel} from "../../models/zoom-level";
 import {MapperPipe} from "../../../../shared/pipes/mapper";
 import {WorkCenterDocument} from "../../models/work-center-document";
 import {TimelineSyncScroll} from "./services/timeline-sync-scroll";
+import {WorkOrderBar} from "../work-order-bar/work-order-bar";
 
 @Component({
     selector: 'app-timeline',
     imports: [
-        TimelinePosition,
+        WorkOrderBar,
         MapperPipe
     ],
     templateUrl: './timeline.html',
@@ -20,10 +21,6 @@ import {TimelineSyncScroll} from "./services/timeline-sync-scroll";
 export class Timeline {
     private readonly _timelineColumn = inject(TimelineColumn);
     private readonly _syncScroll = inject(TimelineSyncScroll);
-
-    protected _timelineHeader = viewChild<ElementRef<HTMLDivElement>>('timelineHeader');
-
-    protected _timelineBody = viewChild<ElementRef<HTMLDivElement>>('timelineBody');
 
     readonly workCenterId = input<WorkCenterDocument['docId']>();
 
@@ -38,7 +35,7 @@ export class Timeline {
         this.workOrders
     );
 
-    getWorkOrdersForCenter(center: string): WorkOrderDocument[] {
+    protected _getWorkOrdersForCenter = (center: WorkCenterDocument['docId']): WorkOrderDocument[] => {
         const workOrders = this.workOrders();
         if (!workOrders || workOrders.length <= 0) {
             return [];
@@ -47,26 +44,7 @@ export class Timeline {
         return workOrders.filter(wo => wo.data.workCenterId === center);
     }
 
-    protected _getWorkOrdersForCenter = (center: WorkCenterDocument['docId']): WorkOrderDocument[] => {
-        const workOrders = this.workOrders();
-        if (!workOrders || workOrders.length <= 0) {
-            return [];
-        }
 
-        return workOrders.filter((wo) => wo.data.workCenterId === center);
-    }
 
-    protected _getStatusClassName = (status: WorkOrderDocument['data']['status']): string => {
-        return `status-${status}`;
-    }
 
-    protected _getStatusLabel = (status: WorkOrderDocument['data']['status']): string => {
-        const labels: Record<WorkOrderDocument['data']['status'], string> = {
-            'complete': 'Complete',
-            'in-progress': 'In progress',
-            'blocked': 'Blocked',
-            'open': 'Open'
-        };
-        return labels[status];
-    }
 }

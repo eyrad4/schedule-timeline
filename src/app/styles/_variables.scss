@@ -2,9 +2,38 @@
     --color-primary: #030929;
     --color-secondary: #687196;
     --color-white: #fff;
-    --color-gray: #E6EBF0;
-    --color-gray-50: #FAFBFD;
     --font-family-regular: 'CircularStd-Regular', 'Inter', system-ui, -apple-system, sans-serif;
     --font-family-medium: 'CircularStd-Medium', 'Inter', system-ui, -apple-system, sans-serif;
 
+    // gray
+    --color-gray-100: #F1F3F8;
+    --color-gray: #E6EBF0;
+    --color-gray-50: #FAFBFD;
+
+    // green
+    --color-green-100: #F8FFF3;
+    --color-green-200: #E1FFCC;
+    --color-green-300: #D1FAB3;
+    --color-green-700: #08A268;
+
+    // yellow
+    --color-yellow-100: #FFFCF1;
+    --color-yellow-200: #FFF5CF;
+    --color-yellow-300: #FCEEB5;
+    --color-yellow-700: #CC9400;
+
+    // orange
+    --color-orange-700: #B13600;
+
+    // purple
+    --color-purple-100: #EDEEFF;
+    --color-purple-200: #DEE0FF;
+    --color-purple-300: #D6D8FF;
+    --color-purple-700: #3E40DB;
+    --color-purple-900: #2F3059;
+
+    // blue
+    --color-blue-100: #E4FDFF;
+    --color-blue-300: #CEFBFF;
+    --color-blue-700: #00B0BF;
 }

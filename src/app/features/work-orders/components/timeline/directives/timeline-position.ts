@@ -13,19 +13,31 @@ interface Column {
     standalone: true
 })
 export class TimelinePosition {
-    workOrder = input.required<WorkOrderDocument>({alias: 'timelinePosition'});
-    zoomLevel = input.required<ZoomLevel>();
-    columns = input.required<Column[]>();
+    readonly workOrder = input.required<WorkOrderDocument | undefined>({alias: 'timelinePosition'});
+
+    readonly zoomLevel = input.required<ZoomLevel | undefined>();
+
+    readonly columns = input.required<Column[] | undefined>();
 
     constructor(
         private renderer: Renderer2,
         private el: ElementRef
     ) {
         effect(() => {
+            const workOrder = this.workOrder();
+            const zoomLevel = this.zoomLevel();
+            const columns = this.columns();
+
+            if (!workOrder || !zoomLevel || !columns || columns.length === 0) {
+                this.renderer.setStyle(this.el.nativeElement, 'left', '0px');
+                this.renderer.setStyle(this.el.nativeElement, 'width', '0px');
+                return;
+            }
+
             const position = this.calculatePosition(
-                this.workOrder(),
-                this.zoomLevel(),
-                this.columns()
+                workOrder,
+                zoomLevel,
+                columns
             );
 
             this.renderer.setStyle(this.el.nativeElement, 'left', position.left);

@@ -1,0 +1,29 @@
+@if (order(); as orderValue) {
+    <div
+        class="work-order-bar"
+        [class]="orderValue.data.status | mapper : _getStatusClassName"
+        [timelinePosition]="orderValue"
+        [zoomLevel]="zoomLevel()"
+        [columns]="timelineColumns()"
+    >
+        <div class="work-order-content">
+            <span class="work-order-client">{{ orderValue.data.name }}</span>
+
+            <div class="work-order-content-inner">
+                <app-work-order-status [status]="orderValue.data.status" />
+
+                <div ngbDropdown container="body" class="work-order-controls">
+                    <button type="button" id="dropdownBasic1" ngbDropdownToggle>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div ngbDropdownMenu [style.marginTop.px]="10" aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem>Edit</button>
+                        <button ngbDropdownItem>Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

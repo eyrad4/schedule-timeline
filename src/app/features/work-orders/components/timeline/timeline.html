@@ -1,5 +1,5 @@
 <div class="timeline-grid-wrapper">
-    <div class="timeline-header" #timelineHeader>
+    <div class="timeline-header">
         <div class="timeline-header-content">
             @for (column of timelineColumns(); track column.date) {
                 <div
@@ -15,24 +15,17 @@
         </div>
     </div>
 
-    <div class="timeline-body" #timelineBody>
+    <div class="timeline-body">
         @for (center of workCenters(); track center.docId) {
             <div class="timeline-row">
 
                 <div class="work-orders-layer">
-                    @for (order of getWorkOrdersForCenter(center.docId); track order.docId) {
-                        <div
-                            class="work-order-bar"
-                            [class]="order.data.status | mapper : _getStatusClassName"
-                            [timelinePosition]="order"
+                    @for (order of center.docId | mapper : _getWorkOrdersForCenter; track order.docId) {
+                        <app-work-order-bar
+                            [order]="order"
                             [zoomLevel]="zoomLevel()"
-                            [columns]="timelineColumns()"
-                        >
-                            <div class="work-order-content">
-                                <span class="work-order-client">{{ order.data.name }}</span>
-                                <span class="work-order-status">{{ order.data.status | mapper : _getStatusLabel }}</span>
-                            </div>
-                        </div>
+                            [timelineColumns]="timelineColumns()"
+                        ></app-work-order-bar>
                     }
                 </div>
             </div>

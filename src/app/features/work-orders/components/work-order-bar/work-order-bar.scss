@@ -1,0 +1,116 @@
+.work-order-bar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 38px;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    pointer-events: all;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(calc(-50% - 2px));
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        .work-order-controls {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    &.status-complete {
+        background: var(--color-green-100);
+        border: 1px solid var(--color-green-300);
+    }
+
+    &.status-in-progress {
+        background: var(--color-purple-100);
+        border: 1px solid var(--color-purple-200);
+    }
+
+    &.status-blocked {
+        background: var(--color-yellow-100);
+        border: 1px solid var(--color-yellow-200);
+    }
+
+    &.status-open {
+        background: var(--color-blue-100);
+        border: 1px solid var(--color-blue-300);
+    }
+}
+
+.work-order-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    min-width: 0;
+
+    &-inner {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+.work-order-client {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .status-complete & {
+        color: var(--color-complete-text);
+    }
+
+    .status-in-progress & {
+        color: var(--color-in-progress-text);
+    }
+
+    .status-blocked & {
+        color: var(--color-blocked-text);
+    }
+}
+
+.work-order-controls {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+
+    &.dropdown {
+        display: flex;
+        align-items: center;
+
+        .dropdown-toggle {
+            margin: 0;
+            padding: 0;
+            outline: unset;
+            border: none;
+            background-color: var(--color-gray-100);
+            border-radius: 5px;
+            width: 24px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+
+            span {
+                width: 1.5px;
+                height: 1.38px;
+                border: 1.4px solid var(--color-purple-900);
+                background-color: var(--color-purple-900);
+            }
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+}
