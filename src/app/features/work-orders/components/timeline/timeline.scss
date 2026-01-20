@@ -31,27 +31,24 @@
     --footer-height: 48px;
 }
 
+:host {
+    overflow: hidden;
+}
+
 $header-height: 32px;
 
 .timeline-grid-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
     height: 100%;
 }
 
 .timeline-header {
-    height: var(--header-height);
+    height: $header-height;
     flex-shrink: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
 }
 
 .timeline-header-content {
@@ -63,8 +60,8 @@ $header-height: 32px;
 }
 
 .timeline-column {
-    min-width: 140px;
-    flex: 1;
+    width: 140px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -109,83 +106,33 @@ $header-height: 32px;
 
 .timeline-body {
     flex: 1;
-    overflow-x: auto;
-    overflow-y: auto;
 }
 
 .timeline-row {
-    height: 100%;
+    height: 48px;
     position: relative;
     border-bottom: 1px solid var(--color-border);
+    width: fit-content;
+    min-width: 100%;
 
     &:last-child {
         border-bottom: none;
     }
 }
 
-.grid-background {
-    display: flex;
-    height: 100%;
-    position: absolute;
-    min-width: 100%;
-    width: fit-content;
-    top: 0;
-    left: 0;
-}
-
-.grid-cell {
-    min-width: 140px;
-    flex: 1;
-    border-right: 1px solid var(--color-border-dark);
-    position: relative;
-
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 1px;
-        background: var(--color-gray);
-    }
-
-    &:first-child::before {
-        display: none; // або content: none;
-    }
-
-    //&.current-month {
-    //    background: blue;
-    //    border-left: 2px solid blue;
-    //    border-right: 2px solid blue;
-    //
-    //    &::before {
-    //        width: 2px;
-    //        background: blue;
-    //    }
-    //}
-
-    //&:first-child::before {
-    //    background: var(--color-gray);
-    //}
-
-    //&:last-child {
-    //    border-right: 1px solid var(--color-gray);
-    //}
-}
-
-// Work Order Bars
 .work-orders-layer {
     position: relative;
     height: 100%;
     min-width: 100%;
     width: fit-content;
-    padding: 16px 8px;
     pointer-events: none;
 }
 
 .work-order-bar {
     position: absolute;
-    height: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 38px;
     border-radius: 8px;
     padding: 10px 16px;
     display: flex;
@@ -197,11 +144,10 @@ $header-height: 32px;
     transition: all 0.2s ease;
 
     &:hover {
-        transform: translateY(-2px);
+        transform: translateY(calc(-50% - 2px));
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    // Status variants
     &.status-complete {
         background: var(--color-complete-bg);
         border: 1px solid var(--color-complete-border);
@@ -311,9 +257,8 @@ $header-height: 32px;
         width: 180px;
     }
 
-    .timeline-column,
-    .grid-cell {
-        min-width: 120px;
+    .timeline-column {
+        width: 120px;
     }
 }
 
@@ -327,8 +272,7 @@ $header-height: 32px;
         padding: 0 12px;
     }
 
-    .timeline-column,
-    .grid-cell {
-        min-width: 100px;
+    .timeline-column {
+        width: 100px;
     }
 }

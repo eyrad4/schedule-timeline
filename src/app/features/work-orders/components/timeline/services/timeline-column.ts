@@ -10,22 +10,25 @@ interface Column {
 
 @Injectable()
 export class TimelineColumn {
-    private _currentDate = new Date(); // September 2024
-
     readonly timelineColumns = (zoom: InputSignal<ZoomLevel>, workOrders: InputSignal<WorkOrderDocument[] | undefined>) => computed(() => {
-        const zoomLevel: Record<ZoomLevel, () => Column[]> = {
-            hour: () => this._hour(),
-            day: () => this._day(),
-            week: () => this._week(),
-            month: () => this._month(workOrders)
+        const orders = workOrders() ?? [];
+        if (orders.length === 0) {
+            return [];
         }
+
+        const { startDate, endDate } = this._getDateRange(orders);
+
+        const zoomLevel: Record<ZoomLevel, () => Column[]> = {
+            hour: () => this._hour(startDate, endDate),
+            day: () => this._day(startDate, endDate),
+            week: () => this._week(startDate, endDate),
+            month: () => this._month(startDate, endDate)
+        };
 
         return zoomLevel[zoom()]();
     });
 
-    private _month(workOrders: InputSignal<WorkOrderDocument[] | undefined>): Column[] {
-        const columns: Column[] = [];
-        const orders = workOrders() ?? [];
+    private _getDateRange(orders: WorkOrderDocument[]): { startDate: Date; endDate: Date } {
         const earliestDate = orders.reduce((min, order) =>
                 order.data.startDate < min ? order.data.startDate : min,
             orders[0].data.startDate
@@ -35,11 +38,43 @@ export class TimelineColumn {
             orders[0].data.endDate
         );
 
-        // Generate columns from start to end month
-        const startYear = new Date(earliestDate).getFullYear();
-        const startMonth = new Date(earliestDate).getMonth();
-        const endYear = new Date(latestDate).getFullYear();
-        const endMonth = new Date(latestDate).getMonth();
+        return {
+            startDate: new Date(earliestDate),
+            endDate: new Date(latestDate)
+        };
+    }
+
+    private _isCurrentMonth(date: Date): boolean {
+        const now = new Date();
+        return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    }
+
+    private _isCurrentWeek(date: Date): boolean {
+        const now = new Date();
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay());
+        const weekEnd = new Date(weekStart);
+        weekEnd.setDate(weekStart.getDate() + 6);
+        return date >= weekStart && date <= weekEnd;
+    }
+
+    private _isCurrentDay(date: Date): boolean {
+        const now = new Date();
+        return date.toDateString() === now.toDateString();
+    }
+
+    private _isCurrentHour(date: Date): boolean {
+        const now = new Date();
+        return date.toDateString() === now.toDateString() && date.getHours() === now.getHours();
+    }
+
+    private _month(startDate: Date, endDate: Date): Column[] {
+        const columns: Column[] = [];
+
+        const startYear = startDate.getFullYear();
+        const startMonth = startDate.getMonth();
+        const endYear = endDate.getFullYear();
+        const endMonth = endDate.getMonth();
 
         for (let year = startYear; year <= endYear; year++) {
             const monthStart = year === startYear ? startMonth : 0;
@@ -47,11 +82,10 @@ export class TimelineColumn {
 
             for (let month = monthStart; month <= monthEnd; month++) {
                 const date = new Date(year, month, 1);
-                const isCurrent = month === 8 && year === 2024;
                 columns.push({
                     label: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
                     date,
-                    isCurrent
+                    isCurrent: this._isCurrentMonth(date)
                 });
             }
         }
@@ -59,65 +93,77 @@ export class TimelineColumn {
         return columns;
     }
 
-    private _week(): Column[] {
+    private _week(startDate: Date, endDate: Date): Column[] {
         const columns: Column[] = [];
-        for (let i = -2; i < 10; i++) {
-            const date = this._currentDate;
-            date.setDate(date.getDate() + (i * 7));
-            const endDate = new Date(date);
-            endDate.setDate(endDate.getDate() + 6);
 
-            const startMonth = date.toLocaleDateString('en-US', { month: 'short' });
-            const endMonth = endDate.toLocaleDateString('en-US', { month: 'short' });
-            const startDay = date.getDate();
-            const endDay = endDate.getDate();
+        // Start from the beginning of the week containing startDate
+        const current = new Date(startDate);
+        current.setDate(current.getDate() - current.getDay());
+        current.setHours(0, 0, 0, 0);
 
-            // If same month, show "Sep 1 - 7", otherwise "Sep 30 - Oct 6"
+        while (current <= endDate) {
+            const weekStart = new Date(current);
+            const weekEnd = new Date(current);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+
+            const startMonth = weekStart.toLocaleDateString('en-US', { month: 'short' });
+            const endMonth = weekEnd.toLocaleDateString('en-US', { month: 'short' });
+            const startDay = weekStart.getDate();
+            const endDay = weekEnd.getDate();
+
             const label = startMonth === endMonth
                 ? `${startMonth} ${startDay} - ${endDay}`
                 : `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
 
             columns.push({
                 label,
-                date
+                date: weekStart,
+                isCurrent: this._isCurrentWeek(weekStart)
             });
+
+            current.setDate(current.getDate() + 7);
         }
 
         return columns;
     }
 
-    private _day(): Column[] {
+    private _day(startDate: Date, endDate: Date): Column[] {
         const columns: Column[] = [];
-        for (let i = 0; i < 30; i++) {
-            const date = this._currentDate;
-            date.setDate(date.getDate() + i);
-            const monthShort = date.toLocaleDateString('en-US', { month: 'short' });
-            const day = date.getDate();
-            const year = date.getFullYear();
+
+        const current = new Date(startDate);
+        current.setHours(0, 0, 0, 0);
+
+        while (current <= endDate) {
+            const date = new Date(current);
             columns.push({
-                label: `${monthShort} ${day}, ${year}`,
-                date
+                label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                date,
+                isCurrent: this._isCurrentDay(date)
             });
+
+            current.setDate(current.getDate() + 1);
         }
 
         return columns;
     }
 
-    private _hour(): Column[] {
+    private _hour(startDate: Date, endDate: Date): Column[] {
         const columns: Column[] = [];
-        for (let i = 0; i < 48; i++) {
-            const date = this._currentDate;
-            date.setHours(date.getHours() + i);
-            const hour = date.getHours();
-            const monthShort = date.toLocaleDateString('en-US', { month: 'short' });
-            const day = date.getDate();
 
-            // Format: "Sep 1 00:00" or "Sep 1 13:00" (24-hour format)
-            const hourString = hour.toString().padStart(2, '0');
+        const current = new Date(startDate);
+        current.setMinutes(0, 0, 0);
+
+        while (current <= endDate) {
+            const date = new Date(current);
+            const hour = date.getHours().toString().padStart(2, '0');
+
             columns.push({
-                label: `${monthShort} ${day}, ${hourString}:00`,
-                date
+                label: `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}, ${hour}:00`,
+                date,
+                isCurrent: this._isCurrentHour(date)
             });
+
+            current.setHours(current.getHours() + 1);
         }
 
         return columns;

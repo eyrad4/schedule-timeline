@@ -1,10 +1,11 @@
-import {Component, computed, ElementRef, inject, input, signal, viewChild} from '@angular/core';
+import {Component, effect, ElementRef, inject, input, viewChild} from '@angular/core';
 import {WorkOrderDocument} from "../../models/work-order-document";
 import {TimelineColumn} from "./services/timeline-column";
 import {TimelinePosition} from "./directives/timeline-position";
 import {ZoomLevel} from "../../models/zoom-level";
 import {MapperPipe} from "../../../../shared/pipes/mapper";
 import {WorkCenterDocument} from "../../models/work-center-document";
+import {TimelineSyncScroll} from "./services/timeline-sync-scroll";
 
 @Component({
     selector: 'app-timeline',
@@ -14,10 +15,11 @@ import {WorkCenterDocument} from "../../models/work-center-document";
     ],
     templateUrl: './timeline.html',
     styleUrl: './timeline.scss',
-    providers: [TimelineColumn]
+    providers: [TimelineColumn, TimelineSyncScroll]
 })
 export class Timeline {
     private readonly _timelineColumn = inject(TimelineColumn);
+    private readonly _syncScroll = inject(TimelineSyncScroll);
 
     protected _timelineHeader = viewChild<ElementRef<HTMLDivElement>>('timelineHeader');
 
@@ -36,15 +38,23 @@ export class Timeline {
         this.workOrders
     );
 
-    protected _getWorkOrdersForCenter = computed(() => {
+    getWorkOrdersForCenter(center: string): WorkOrderDocument[] {
         const workOrders = this.workOrders();
-        const workCenterId = this.workCenterId();
         if (!workOrders || workOrders.length <= 0) {
             return [];
         }
 
-        return workOrders.filter((w) => w.data.workCenterId === workCenterId) ?? [];
-    });
+        return workOrders.filter(wo => wo.data.workCenterId === center);
+    }
+
+    protected _getWorkOrdersForCenter = (center: WorkCenterDocument['docId']): WorkOrderDocument[] => {
+        const workOrders = this.workOrders();
+        if (!workOrders || workOrders.length <= 0) {
+            return [];
+        }
+
+        return workOrders.filter((wo) => wo.data.workCenterId === center);
+    }
 
     protected _getStatusClassName = (status: WorkOrderDocument['data']['status']): string => {
         return `status-${status}`;
