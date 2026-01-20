@@ -45,7 +45,7 @@ export class WorkOrderUpsertDrawer {
     readonly editData= model<WorkOrderDocument>();
 
     readonly actionLabel = computed(() => {
-        return this.createData() ? 'Create' : 'Update';
+        return this.createData() ? 'Create' : 'Save';
     })
 
     constructor() {
