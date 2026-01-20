@@ -1,12 +1,17 @@
-import {Component, ElementRef, inject, input, viewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, output, viewChild} from '@angular/core';
 import {WorkOrderDocument} from "../../models/work-order-document";
-import {TimelineColumn} from "./services/timeline-column";
+import {TimelineColumn, TimelineColumnItem} from "./services/timeline-column";
 import {TimelinePosition} from "./directives/timeline-position";
 import {ZoomLevel} from "../../models/zoom-level";
 import {MapperPipe} from "../../../../shared/pipes/mapper";
 import {WorkCenterDocument} from "../../models/work-center-document";
 import {TimelineSyncScroll} from "./services/timeline-sync-scroll";
 import {WorkOrderBar} from "../work-order-bar/work-order-bar";
+
+export interface CellClickEvent {
+    workCenter: WorkCenterDocument;
+    column: TimelineColumnItem;
+}
 
 @Component({
     selector: 'app-timeline',
@@ -30,6 +35,8 @@ export class Timeline {
 
     readonly zoomLevel = input<ZoomLevel>('month');
 
+    readonly cellClick = output<CellClickEvent>();
+
     readonly timelineColumns = this._timelineColumn.timelineColumns(
         this.zoomLevel,
         this.workOrders
@@ -44,7 +51,7 @@ export class Timeline {
         return workOrders.filter(wo => wo.data.workCenterId === center);
     }
 
-
-
-
+    onCellClick(workCenter: WorkCenterDocument, column: TimelineColumnItem): void {
+        this.cellClick.emit({ workCenter, column });
+    }
 }
