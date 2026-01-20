@@ -1,5 +1,7 @@
-@use './styles/reset';
-@use './styles/variables';
+@use 'bootstrap/scss/bootstrap';
+
+@use './app/styles/reset';
+@use './app/styles/variables';
 
 html {
   height: 100%;

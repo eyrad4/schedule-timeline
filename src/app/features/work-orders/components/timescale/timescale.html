@@ -1,0 +1,14 @@
+<div class="btn-group me-3">
+    <button type="button" class="btn btn-outline-success">Plain ol' button</button>
+    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-outline-primary" ngbDropdownToggle>{{ _selectedLevelLabel() }}</button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+            @for (item of _levels; track item.type) {
+                <button
+                    [class.active]="_zoomLevel() === item.type"
+                    ngbDropdownItem
+                    (click)="_changeZoom(item.type)">{{ item.label }}</button>
+            }
+        </div>
+    </div>
+</div>

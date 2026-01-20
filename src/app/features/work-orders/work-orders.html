@@ -1,0 +1,13 @@
+<app-title>Work Orders</app-title>
+
+<app-timescale (zoomLevelChange)="_setZoomLevel($event)" />
+
+<div class="work-order-schedule">
+    <div class="timeline-container">
+        <div class="work-centers-column">
+            <div class="work-center-header">Work Center</div>
+            <app-work-center-list [workCenters]="_workCenters" />
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,11 @@
+<div class="work-center-list">
+    @for (item of workCenters(); track item.id) {
+        <div
+            class="work-center-row"
+            [class.active]="item.id === _selectedWorkCenter()"
+            (click)="_changeWorkCenter(item.id)"
+        >
+            {{ item.label }}
+        </div>
+    }
+</div>
