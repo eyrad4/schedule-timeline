@@ -3,7 +3,8 @@
 
 @use './app/styles/reset';
 @use './app/styles/variables';
-@use './app/styles/_form';
+@use './app/styles/form';
+@use './app/styles/button';
 
 html {
     height: 100%;
