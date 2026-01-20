@@ -42,20 +42,4 @@ export class WorkOrderDrawer {
             }
         );
     }
-
-    // create(): void {
-    //     const offcanvasRef = this._offcanvasService.open(WorkOrderUpsertDrawer);
-    //     offcanvasRef.componentInstance.name = 'World';
-    //
-    //     offcanvasRef.result.then(
-    //         (result) => {
-    //             this.closeResult.set(`Closed with: ${result}`);
-    //         },
-    //         (reason) => {
-    //             this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-    //         },
-    //     );
-    // }
-
-
 }

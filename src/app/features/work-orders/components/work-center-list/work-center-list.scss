@@ -18,16 +18,4 @@
     color: var(--color-text);
     border-bottom: 1px solid var(--color-gray);
     transition: background 0.2s ease-in-out, width 0.2s ease-in-out;
-
-    &:hover {
-        cursor: pointer;
-    }
-
-    &:hover, &.active {
-        background-color: var(--color-gray-50);
-    }
-
-    &:last-child {
-        border-bottom: none;
-    }
 }

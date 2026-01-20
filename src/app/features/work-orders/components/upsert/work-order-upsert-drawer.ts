@@ -67,7 +67,6 @@ export class WorkOrderUpsertDrawer {
                 this._update();
             }
         } else {
-            console.log(this._form.getRawValue())
             this._form.markAllAsTouched();
         }
     }
@@ -114,15 +113,5 @@ export class WorkOrderUpsertDrawer {
         if (!date) return '';
         const d = new Date(date);
         return d.toISOString().split('T')[0];
-    }
-
-    private _toNgbDate(isoDate: string | null): NgbDateStruct | null {
-        if (!isoDate) return null;
-        const date = new Date(isoDate);
-        return {
-            year: date.getFullYear(),
-            month: date.getMonth() + 1, // В JS місяці 0-11, в NgbDate 1-12
-            day: date.getDate()
-        };
     }
 }

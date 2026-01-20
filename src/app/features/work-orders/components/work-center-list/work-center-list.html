@@ -2,7 +2,6 @@
     @for (item of workCenters(); track item.docId) {
         <div
             class="work-center-row"
-            [class.active]="item.docId === workCenterId()"
             (click)="this.workCenterChange.emit(item.docId)"
         >
             {{ item.data.name }}
