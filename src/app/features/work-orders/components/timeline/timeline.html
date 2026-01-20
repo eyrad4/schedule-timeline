@@ -1,1 +1,44 @@
-<p>timeline works!</p>
+<div class="timeline-grid-wrapper">
+    <div class="timeline-header" #timelineHeader>
+        <div class="timeline-header-content">
+            @for (column of timelineColumns(); track column.date) {
+                <div
+                    class="timeline-column"
+                    [class.current-month]="column.isCurrent"
+                >
+                    <div class="column-label">{{ column.label }}</div>
+                    @if (column.isCurrent) {
+                        <div class="current-month-label">Current month</div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="timeline-body" #timelineBody>
+        <div class="timeline-row">
+            <div class="grid-background">
+                @for (column of timelineColumns(); track column.date) {
+                    <div class="grid-cell" [class.current-month]="column.isCurrent"></div>
+                }
+            </div>
+
+            <div class="work-orders-layer">
+                @for (order of _getWorkOrdersForCenter(); track order.data.workCenterId) {
+                    <div
+                        class="work-order-bar"
+                        [class]="order.data.status | mapper : _getStatusClassName"
+                        [timelinePosition]="order"
+                        [zoomLevel]="zoomLevel()"
+                        [columns]="timelineColumns()"
+                    >
+                        <div class="work-order-content">
+                            <span class="work-order-client">{{ order.data.name }}</span>
+                            <span class="work-order-status">{{ order.data.status | mapper : _getStatusLabel }}</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 import {Component, computed, output, signal} from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
-import {ZoomLevel} from "../../work-orders";
+import {ZoomLevel} from "../../models/zoom-level";
 
 @Component({
   selector: 'app-timescale',
@@ -44,8 +44,6 @@ export class Timescale {
 
     protected _changeZoom(level: ZoomLevel) {
         this._zoomLevel.set(level);
-        // Тут можна викликати API або оновлювати графік
-        console.log('Scale changed to:', level);
         this.zoomLevelChange.emit(level);
     }
 }

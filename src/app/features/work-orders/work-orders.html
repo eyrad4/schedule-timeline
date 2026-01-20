@@ -1,13 +1,24 @@
 <app-title>Work Orders</app-title>
 
-<app-timescale (zoomLevelChange)="_setZoomLevel($event)" />
+<app-timescale (zoomLevelChange)="this._zoomLevel.set($event)" />
 
 <div class="work-order-schedule">
     <div class="timeline-container">
         <div class="work-centers-column">
             <div class="work-center-header">Work Center</div>
-            <app-work-center-list [workCenters]="_workCenters" />
+            <app-work-center-list
+                [workCenterId]="_workCenterId()"
+                [workCenters]="_workCenters()"
+                (workCenterChange)="_workCenterId.set($event)"
+            />
         </div>
+
+        <app-timeline
+            [workCenterId]="_workCenterId()"
+            [workCenters]="_workCenters()"
+            [workOrders]="_workOrdersData.workOrders()"
+            [zoomLevel]="_zoomLevel()"
+        ></app-timeline>
     </div>
 </div>
 
