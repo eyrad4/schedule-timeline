@@ -6,6 +6,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {getStatusLabel, WORK_ORDER_STATUS, WorkOrderStatusItem} from "../../models/work-order-status-item";
 import {WorkOrderStatus} from "../work-order-status/work-order-status";
+import {dateRangeValidator} from "../../../../shared/validators/date-range.validator";
 
 @Component({
   selector: 'app-upsert',
@@ -32,9 +33,11 @@ export class WorkOrderUpsertDrawer {
 
     protected _form = this._fb.group({
         name: this._fb.control<string | null>(null, { nonNullable: false, validators: [Validators.required] }),
-        status: this._fb.control<WorkOrderStatusItem | null>(null, { nonNullable: false, validators: [Validators.required] }),
+        status: this._fb.control<WorkOrderStatusItem | null>(WORK_ORDER_STATUS.open, { nonNullable: false, validators: [Validators.required] }),
         endDate: this._fb.control<string | Date | null>(null, { nonNullable: false, validators: [Validators.required] }),
         startDate: this._fb.control<string | Date | null>(null, { nonNullable: false, validators: [Validators.required] }),
+    }, {
+        validators: [dateRangeValidator('startDate', 'endDate')]
     });
 
     readonly createData= model<{ workCenterDocId: WorkCenterDocument['docId'] }>();
@@ -60,6 +63,7 @@ export class WorkOrderUpsertDrawer {
     }
 
     protected _upsert(): void {
+        console.log(this._form.getRawValue())
         if (this._form.valid) {
             if (this.createData()) {
                 this._create();

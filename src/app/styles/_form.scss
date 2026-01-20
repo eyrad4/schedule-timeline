@@ -1,0 +1,46 @@
+.ng-select,
+.form-control {
+
+}
+
+.ng-select {
+    font-family: "Circular-Std", sans-serif;
+    .ng-select-container {
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        min-height: 45px;
+    }
+}
+
+.ng-select.ng-invalid:not(.ng-untouched) .ng-select-container,
+.form-control.ng-invalid:not(.ng-untouched) {
+    border: 1px solid red;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        color: var(--color-secondary);
+        font-weight: 500;
+    }
+
+    input.form-control,
+    .ng-select .ng-select-container{
+        height: 38px;
+        min-height: auto;
+        border-radius: 5px;
+        border: 1px solid var(--color-purple-250);
+    }
+}
+
+//.ng-select.ng-select-single .ng-select-container {
+//    height: 38px;
+//    min-height: auto;
+//}
+
+ngb-datepicker.dropdown-menu.show {
+    width: auto;
+}

@@ -16,7 +16,7 @@
 
 <div class="drawer-body">
     <form [formGroup]="_form">
-        <div class="mb-3">
+        <div class="form-group mb-3">
             <label for="name">Work Order Name</label>
             <input
                 formControlName="name"
@@ -25,11 +25,12 @@
             />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group mb-3">
             <label for="status">Status</label>
             <ng-select
                 formControlName="status"
                 [items]="statuses"
+                [clearable]="false"
                 bindLabel="label"
                 bindValue="value"
             >
@@ -42,26 +43,32 @@
             </ng-select>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group mb-3">
             <label for="endDate">End Date</label>
 
             <input
                 id="endDate"
                 class="form-control"
-                placeholder="yyyy-mm-dd"
+                placeholder="2026.02.15"
                 formControlName="endDate"
                 ngbDatepicker
                 #dp="ngbDatepicker"
                 (click)="dp.toggle()"
             />
+
+            @if (_form.hasError('dateRangeInvalid')) {
+                <div class="invalid-feedback d-block">
+                    End date must be after start date.
+                </div>
+            }
         </div>
 
-        <div class="mb-3">
+        <div class="form-group mb-3">
             <label for="startDate">Start Date</label>
             <input
                 id="startDate"
                 class="form-control"
-                placeholder="yyyy-mm-dd"
+                placeholder="2026.01.01"
                 formControlName="startDate"
                 ngbDatepicker
                 #dp2="ngbDatepicker"
