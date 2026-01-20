@@ -106,18 +106,23 @@ $header-height: 32px;
 
 .timeline-body {
     flex: 1;
+
+    // Vertical grid lines separating columns (full height)
+    background-image: repeating-linear-gradient(
+        to right,
+        var(--color-gray) 0,
+        var(--color-gray) 1px,
+        transparent 1px,
+        transparent 140px
+    );
+    background-size: 140px 100%;
 }
 
 .timeline-row {
     height: 48px;
     position: relative;
-    border-bottom: 1px solid var(--color-border);
     width: fit-content;
     min-width: 100%;
-
-    &:last-child {
-        border-bottom: none;
-    }
 }
 
 .work-orders-layer {
@@ -161,6 +166,17 @@ $header-height: 32px;
     .timeline-column {
         width: 120px;
     }
+
+    .timeline-body {
+        background-image: repeating-linear-gradient(
+            to right,
+            var(--color-gray) 0,
+            var(--color-gray) 1px,
+            transparent 1px,
+            transparent 120px
+        );
+        background-size: 120px 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -175,5 +191,16 @@ $header-height: 32px;
 
     .timeline-column {
         width: 100px;
+    }
+
+    .timeline-body {
+        background-image: repeating-linear-gradient(
+            to right,
+            var(--color-gray) 0,
+            var(--color-gray) 1px,
+            transparent 1px,
+            transparent 100px
+        );
+        background-size: 100px 100%;
     }
 }
