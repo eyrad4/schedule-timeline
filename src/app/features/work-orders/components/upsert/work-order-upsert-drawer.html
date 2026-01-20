@@ -1,0 +1,72 @@
+<div class="drawer-header">
+    <div class="drawer-headline">
+        <div class="drawer-title">Work order details</div>
+        <div class="drawer-subtitle">Specify the dates, name and status for this order</div>
+    </div>
+    <div class="drawer-actions">
+        <button type="button" class="btn btn-outline-secondary" (click)="_activeOffcanvas.dismiss('close')">
+            Cancel
+        </button>
+
+        <button type="button" class="btn btn-outline-secondary" (click)="_upsert()">
+            {{ actionLabel() }}
+        </button>
+    </div>
+</div>
+
+<div class="drawer-body">
+    <form [formGroup]="_form">
+        <div class="mb-3">
+            <label for="name">Work Order Name</label>
+            <input
+                formControlName="name"
+                class="form-control"
+                placeholder="Name..."
+            />
+        </div>
+
+        <div class="mb-3">
+            <label for="status">Status</label>
+            <ng-select
+                formControlName="status"
+                [items]="statuses"
+                bindLabel="label"
+                bindValue="value"
+            >
+                <ng-template ng-label-tmp let-item="item">
+                    <app-work-order-status [status]="item.value" />
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item">
+                    {{ item.label }}
+                </ng-template>
+            </ng-select>
+        </div>
+
+        <div class="mb-3">
+            <label for="endDate">End Date</label>
+
+            <input
+                id="endDate"
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                formControlName="endDate"
+                ngbDatepicker
+                #dp="ngbDatepicker"
+                (click)="dp.toggle()"
+            />
+        </div>
+
+        <div class="mb-3">
+            <label for="startDate">Start Date</label>
+            <input
+                id="startDate"
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                formControlName="startDate"
+                ngbDatepicker
+                #dp2="ngbDatepicker"
+                (click)="dp2.toggle()"
+            />
+        </div>
+    </form>
+</div>

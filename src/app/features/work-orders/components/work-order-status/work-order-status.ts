@@ -1,5 +1,6 @@
 import {Component, computed, input} from '@angular/core';
 import {WorkOrderDocument} from "../../models/work-order-document";
+import {getStatusLabel} from "../../models/work-order-status-item";
 
 @Component({
     selector: 'app-work-order-status',
@@ -26,12 +27,6 @@ export class WorkOrderStatus {
             return '';
         }
 
-        const labels: Record<WorkOrderDocument['data']['status'], string> = {
-            'complete': 'Complete',
-            'in-progress': 'In progress',
-            'blocked': 'Blocked',
-            'open': 'Open'
-        };
-        return labels[status] ?? 'Unknown';
+        return getStatusLabel(status) ?? 'Unknown';
     });
 }

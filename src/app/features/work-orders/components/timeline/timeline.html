@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="work-orders-layer">
-                    @for (order of center.docId | mapper : _getWorkOrdersForCenter; track order.docId) {
+                    @for (order of workOrders() | workOrdersForCenter : center.docId; track order.docId) {
                         <app-work-order-bar
                             [order]="order"
                             [zoomLevel]="zoomLevel()"

@@ -7,6 +7,9 @@ import {Timeline} from "./components/timeline/timeline";
 import {ZoomLevel} from "./models/zoom-level";
 import {WorkCenterDocument} from "./models/work-center-document";
 import {WorkCentersData} from "./data-access/work-centers-data";
+import {NgbOffcanvas} from "@ng-bootstrap/ng-bootstrap";
+import {WorkOrderUpsertDrawer} from "./components/upsert/work-order-upsert-drawer";
+import {WorkOrderDrawer} from "./services/work-order-drawer";
 
 @Component({
     selector: 'app-work-orders',
@@ -18,11 +21,10 @@ import {WorkCentersData} from "./data-access/work-centers-data";
     ],
     templateUrl: './work-orders.html',
     styleUrl: './work-orders.scss',
-    providers: [WorkOrdersData, WorkCentersData]
+    providers: [WorkOrdersData, WorkCentersData, WorkOrderUpsertDrawer, WorkOrderDrawer]
 })
 export class WorkOrders {
     private _workCentersData = inject(WorkCentersData);
-
     protected _workCenters = this._workCentersData.workCenters;
 
     protected _zoomLevel = signal<ZoomLevel>('month');

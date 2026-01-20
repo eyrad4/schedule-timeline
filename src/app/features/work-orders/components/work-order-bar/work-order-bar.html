@@ -19,8 +19,8 @@
                         <span></span>
                     </button>
                     <div ngbDropdownMenu [style.marginTop.px]="10" aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem>Edit</button>
-                        <button ngbDropdownItem>Delete</button>
+                        <button ngbDropdownItem (click)="_edit()">Edit</button>
+                        <button ngbDropdownItem (click)="_remove()">Delete</button>
                     </div>
                 </div>
             </div>

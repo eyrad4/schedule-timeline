@@ -43,8 +43,4 @@ export class WorkCentersData {
     ]);
 
     readonly workCenters = this._workCenters.asReadonly();
-
-    add(workCenter: WorkCenterDocument) {
-        this._workCenters.update((workCenters) => [...workCenters, workCenter]);
-    }
 }
