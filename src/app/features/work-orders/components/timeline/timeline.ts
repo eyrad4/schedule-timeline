@@ -35,7 +35,7 @@ export class Timeline {
 
     readonly zoomLevel = input<ZoomLevel>('month');
 
-    readonly cellClick = output<CellClickEvent>();
+    readonly addNew = output<CellClickEvent>();
 
     readonly timelineColumns = this._timelineColumn.timelineColumns(
         this.zoomLevel,
@@ -51,7 +51,7 @@ export class Timeline {
         return workOrders.filter(wo => wo.data.workCenterId === center);
     }
 
-    onCellClick(workCenter: WorkCenterDocument, column: TimelineColumnItem): void {
-        this.cellClick.emit({ workCenter, column });
+    protected _addNew(workCenter: WorkCenterDocument, column: TimelineColumnItem): void {
+        this.addNew.emit({ workCenter, column });
     }
 }

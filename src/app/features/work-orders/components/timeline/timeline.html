@@ -22,7 +22,7 @@
                     @for (column of timelineColumns(); track column.date) {
                         <div
                             class="grid-cell"
-                            (click)="onCellClick(center, column)"
+                            (click)="_addNew(center, column)"
                         >
                             <div class="grid-cell-inner">
                                 <div class="add-new">
