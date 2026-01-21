@@ -1,7 +1,7 @@
-<div class="btn-group me-3">
-    <button type="button" class="btn btn-outline-success">Plain ol' button</button>
+<div class="timescale btn-group me-3">
+    <div class="timescale-title">Timescale</div>
     <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-outline-primary" ngbDropdownToggle>{{ _selectedLevelLabel() }}</button>
+        <button type="button" class="btn timescale-dropdown" ngbDropdownToggle>{{ _selectedLevelLabel() }}</button>
         <div class="dropdown-menu" ngbDropdownMenu>
             @for (item of _levels; track item.type) {
                 <button
