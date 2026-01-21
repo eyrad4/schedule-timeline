@@ -16,6 +16,12 @@
     </div>
 
     <div class="timeline-body">
+        <div class="timeline-grid-background">
+            @for (column of timelineColumns(); track column.date) {
+                <div class="grid-column-bg"></div>
+            }
+        </div>
+
         @for (center of workCenters(); track center.docId) {
             <div class="timeline-row">
                 <div class="grid-cells-layer">
