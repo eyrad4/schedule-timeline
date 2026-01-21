@@ -61,6 +61,12 @@
                     End date must be after start date.
                 </div>
             }
+
+            @if (_form.hasError('dateOverlap')) {
+                <div class="invalid-feedback d-block">
+                    Dates overlap with "{{ _form.getError('dateOverlap').overlappingOrderName }}"
+                </div>
+            }
         </div>
 
         <div class="form-group mb-3">
@@ -74,6 +80,12 @@
                 #dp2="ngbDatepicker"
                 (click)="dp2.toggle()"
             />
+
+            @if (_form.hasError('dateOverlap')) {
+                <div class="invalid-feedback d-block">
+                    Dates overlap with "{{ _form.getError('dateOverlap').overlappingOrderName }}"
+                </div>
+            }
         </div>
     </form>
 </div>

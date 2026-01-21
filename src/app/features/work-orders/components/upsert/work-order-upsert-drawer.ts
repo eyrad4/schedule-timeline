@@ -1,5 +1,5 @@
-import {Component, computed, effect, inject, input, model} from '@angular/core';
-import {NgbActiveOffcanvas, NgbDateAdapter, NgbDateNativeAdapter, NgbDateStruct, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import {Component, computed, effect, inject, model} from '@angular/core';
+import {NgbActiveOffcanvas, NgbDateAdapter, NgbDateNativeAdapter, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import {CreateWorkOrderDocument, WorkOrderDocument} from "../../models/work-order-document";
 import {WorkCenterDocument} from "../../models/work-center-document";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -7,6 +7,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {getStatusLabel, WORK_ORDER_STATUS, WorkOrderStatusItem} from "../../models/work-order-status-item";
 import {WorkOrderStatus} from "../work-order-status/work-order-status";
 import {dateRangeValidator} from "../../../../shared/validators/date-range.validator";
+import {dateOverlapValidator} from "../../../../shared/validators/date-overlap.validator";
 
 @Component({
   selector: 'app-upsert',
@@ -40,13 +41,15 @@ export class WorkOrderUpsertDrawer {
         validators: [dateRangeValidator('startDate', 'endDate')]
     });
 
-    readonly createData= model<{ workCenterDocId: WorkCenterDocument['docId'] }>();
+    readonly createData = model<{ workCenterDocId: WorkCenterDocument['docId'] }>();
 
-    readonly editData= model<WorkOrderDocument>();
+    readonly editData = model<WorkOrderDocument>();
+
+    readonly workOrders = model<WorkOrderDocument[]>([]);
 
     readonly actionLabel = computed(() => {
         return this.createData() ? 'Create' : 'Save';
-    })
+    });
 
     constructor() {
         effect(() => {
@@ -58,6 +61,27 @@ export class WorkOrderUpsertDrawer {
                     startDate: editData.data.startDate ? new Date(editData.data.startDate) : null,
                     endDate: editData.data.endDate ? new Date(editData.data.endDate) : null,
                 });
+            }
+        });
+
+        effect(() => {
+            const workOrders = this.workOrders();
+            const createData = this.createData();
+            const editData = this.editData();
+
+            const workCenterId = createData?.workCenterDocId ?? editData?.data.workCenterId;
+            const excludeDocId = editData?.docId;
+
+            if (workCenterId) {
+                this._form.setValidators([
+                    dateRangeValidator('startDate', 'endDate'),
+                    dateOverlapValidator({
+                        workOrders,
+                        workCenterId,
+                        excludeDocId
+                    })
+                ]);
+                this._form.updateValueAndValidity();
             }
         });
     }

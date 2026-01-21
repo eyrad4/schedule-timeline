@@ -21,6 +21,7 @@ export class WorkOrderDrawer {
         offcanvasRef.componentInstance.createData.set({
             workCenterDocId
         });
+        offcanvasRef.componentInstance.workOrders.set(this._workOrdersData.workOrders());
 
         offcanvasRef.result.then(
             (result: CreateWorkOrderDocument) => {
@@ -35,6 +36,7 @@ export class WorkOrderDrawer {
             panelClass: 'custom-drawer-panel'
         });
         offcanvasRef.componentInstance.editData.set(data);
+        offcanvasRef.componentInstance.workOrders.set(this._workOrdersData.workOrders());
 
         offcanvasRef.result.then(
             (result: WorkOrderDocument) => {
