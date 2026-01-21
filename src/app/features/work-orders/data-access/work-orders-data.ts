@@ -12,13 +12,24 @@ export class WorkOrdersData {
             data: {
                 name: 'Active Project (Week ago)',
                 workCenterId: 'genesis',
-                status: 'in-progress',
+                status: 'complete',
                 startDate: '2025-12-13',
                 endDate: '2026-02-20'
             }
         },
         {
             docId: 'WO-002',
+            docType: 'workOrder',
+            data: {
+                name: 'New Project',
+                workCenterId: 'genesis',
+                status: 'in-progress',
+                startDate: '2026-02-23',
+                endDate: '2026-04-05'
+            }
+        },
+        {
+            docId: 'WO-003',
             docType: 'workOrder',
             data: {
                 name: 'Today Release',
@@ -29,18 +40,18 @@ export class WorkOrdersData {
             }
         },
         {
-            docId: 'WO-003',
+            docId: 'WO-004',
             docType: 'workOrder',
             data: {
                 name: 'Future Sprint A',
                 workCenterId: 'konsulting',
-                status: 'open',
+                status: 'in-progress',
                 startDate: '2026-01-01',
                 endDate: '2026-02-15'
             }
         },
         {
-            docId: 'WO-004',
+            docId: 'WO-005',
             docType: 'workOrder',
             data: {
                 name: 'Next Month Plan',
@@ -51,7 +62,7 @@ export class WorkOrdersData {
             }
         },
         {
-            docId: 'WO-005',
+            docId: 'WO-006',
             docType: 'workOrder',
             data: {
                 name: 'Long Term Blocked',
@@ -62,12 +73,23 @@ export class WorkOrdersData {
             }
         },
         {
-            docId: 'WO-006',
+            docId: 'WO-007',
             docType: 'workOrder',
             data: {
                 name: 'Spring Batch',
                 workCenterId: 'spartan',
                 status: 'open',
+                startDate: '2026-01-18',
+                endDate: '2026-02-26'
+            }
+        },
+        {
+            docId: 'WO-008',
+            docType: 'workOrder',
+            data: {
+                name: 'Feature one',
+                workCenterId: 'spartan',
+                status: 'blocked',
                 startDate: '2026-03-01',
                 endDate: '2026-08-25'
             }
