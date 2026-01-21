@@ -29,24 +29,20 @@
             ></div>
         }
 
-        @for (center of workCenters(); track center.docId) {
-            <div class="timeline-row">
-                <div class="grid-cells-layer">
-                    @for (column of timelineColumns(); track column.date) {
-                        <div
-                            class="grid-cell"
-                            (click)="_addNew(center, column)"
-                        >
-                            <div class="grid-cell-inner">
-                                <div class="add-new">
-<!--                                    <div class="add-new-hint">-->
-<!--                                        Click to add dates-->
-<!--                                    </div>-->
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
+        @for (center of workCenters(); track center.docId; let rowIndex = $index) {
+            <div
+                class="timeline-row"
+                [style.width.px]="timelineWidth()"
+                (click)="_onRowClick($event, center)"
+                (mousemove)="_onRowMouseMove($event, rowIndex, center.docId)"
+                (mouseleave)="_onRowMouseLeave()"
+            >
+                @if (hoverState().visible && hoverState().rowIndex === rowIndex) {
+                    <div
+                        class="cell-hover-indicator"
+                        [style.left.px]="hoverState().left"
+                    ></div>
+                }
 
                 <div class="work-orders-layer">
                     @for (order of workOrders() | workOrdersForCenter : center.docId; track order.docId) {

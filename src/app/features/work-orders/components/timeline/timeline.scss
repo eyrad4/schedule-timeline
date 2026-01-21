@@ -145,84 +145,22 @@ $header-height: 32px;
 .timeline-row {
     height: 48px;
     position: relative;
-    width: fit-content;
-    min-width: 100%;
-}
-
-.grid-cells-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    z-index: 1;
-}
-
-.grid-cell {
-    width: 140px;
-    height: 100%;
-    flex-shrink: 0;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid var(--color-gray);
-    background-color: var(--color-purple-50);
-
-    &-inner {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-
-    &:hover {
-        .add-new {
-            opacity: 1;
-            //&:hover {
-            //    .add-new-hint {
-            //        opacity: 1;
-            //    }
-            //}
-        }
-    }
 }
 
-.add-new {
-    opacity: 0;
+.cell-hover-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 113px;
+    height: 38px;
+    margin-left: 14px; // Center within 140px column
     background-color: rgba(101, 112, 255, 0.1);
     border: 1px solid var(--color-blue-400);
     border-radius: 8px;
-    padding: 6px 12px;
-    width: 113px;
-    height: 38px;
-    transition: opacity 0.15s ease;
-
-    span {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--color-purple-700);
-        white-space: nowrap;
-    }
+    pointer-events: none;
+    z-index: 1;
 }
-
-// @upgrade soon
-//.add-new-hint {
-//    position: absolute;
-//    top: -31px;
-//    width: 130px;
-//    height: 26px;
-//    box-shadow: 0 2px 4px -2px rgba(200, 207, 233, 1),
-//    0 0 16px -8px rgba(230, 235, 240, 1);
-//    border-radius: 8px;
-//    background-color: rgba(104, 113, 150, 1);
-//    color: var(--color-gray-200);
-//    opacity: 0;
-//    display: flex;
-//    justify-content: center;
-//    align-items: center;
-//}
 
 .work-orders-layer {
     position: absolute;
@@ -265,7 +203,6 @@ $header-height: 32px;
     }
 
     .timeline-column,
-    .grid-cell,
     .grid-column-bg {
         width: 120px;
     }
@@ -282,7 +219,6 @@ $header-height: 32px;
     }
 
     .timeline-column,
-    .grid-cell,
     .grid-column-bg {
         width: 100px;
     }
