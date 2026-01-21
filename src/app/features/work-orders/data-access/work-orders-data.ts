@@ -10,66 +10,66 @@ export class WorkOrdersData {
             docId: 'WO-001',
             docType: 'workOrder',
             data: {
-                name: 'Intrix Ltd',
+                name: 'Active Project (Week ago)',
                 workCenterId: 'genesis',
-                status: 'complete',
-                startDate: '2024-08-01',
-                endDate: '2024-09-15'
+                status: 'in-progress',
+                startDate: '2025-12-13',
+                endDate: '2026-02-20'
             }
         },
         {
             docId: 'WO-002',
             docType: 'workOrder',
             data: {
-                name: 'Complete',
+                name: 'Today Release',
                 workCenterId: 'rodriques',
                 status: 'complete',
-                startDate: '2024-09-01',
-                endDate: '2024-10-15'
+                startDate: '2026-01-20',
+                endDate: '2026-02-30'
             }
         },
         {
             docId: 'WO-003',
             docType: 'workOrder',
             data: {
-                name: 'Konsulting Inc',
+                name: 'Future Sprint A',
                 workCenterId: 'konsulting',
-                status: 'in-progress',
-                startDate: '2024-09-15',
-                endDate: '2024-10-30'
+                status: 'open',
+                startDate: '2026-01-01',
+                endDate: '2026-02-15'
             }
         },
         {
             docId: 'WO-004',
             docType: 'workOrder',
             data: {
-                name: 'Complex Systems',
+                name: 'Next Month Plan',
                 workCenterId: 'konsulting',
-                status: 'in-progress',
-                startDate: '2024-11-01',
-                endDate: '2025-01-15'
+                status: 'open',
+                startDate: '2026-02-20',
+                endDate: '2026-04-10'
             }
         },
         {
             docId: 'WO-005',
             docType: 'workOrder',
             data: {
-                name: 'McMarrow Distribution',
+                name: 'Long Term Blocked',
                 workCenterId: 'mcmarrow',
                 status: 'blocked',
-                startDate: '2024-11-15',
-                endDate: '2027-02-28'
+                startDate: '2026-01-20',
+                endDate: '2026-06-30'
             }
         },
         {
             docId: 'WO-006',
             docType: 'workOrder',
             data: {
-                name: 'Spartan Manufacturing',
+                name: 'Spring Batch',
                 workCenterId: 'spartan',
-                status: 'complete',
-                startDate: '2024-09-01',
-                endDate: '2024-09-30'
+                status: 'open',
+                startDate: '2026-03-01',
+                endDate: '2026-08-25'
             }
         }
     ]);
