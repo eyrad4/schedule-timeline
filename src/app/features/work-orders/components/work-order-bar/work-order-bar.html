@@ -5,6 +5,7 @@
         [timelinePosition]="orderValue"
         [zoomLevel]="zoomLevel()"
         [columns]="timelineColumns()"
+        (click)="$event.stopPropagation()"
     >
         <div class="work-order-content">
             <span class="work-order-client">{{ orderValue.data.name }}</span>
