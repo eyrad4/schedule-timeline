@@ -9,8 +9,6 @@
 }
 
 .btn.btn-primary {
-    box-shadow: 0 0 0 1px rgba(86, 89, 255, 1),
-    0 1px 3px 0 rgba(200, 207, 233, 1);
     background-color: var(--color-blue-500);
     color: var(--color-white);
 }
@@ -19,5 +17,6 @@
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 1),
     0 1px 3px 0 rgba(200, 207, 233, 1);
     background-color: var(--color-white);
+    border: unset;
     color: var(--color-purple-900);
 }

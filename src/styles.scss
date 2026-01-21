@@ -85,3 +85,11 @@ input.form-control {
     color: var(--color-gray-300) !important;
     opacity: 1 !important;
 }
+
+.offcanvas-backdrop {
+    background-color: var(--color-white);
+
+    &.show {
+        opacity: 0.5 !important;
+    }
+}

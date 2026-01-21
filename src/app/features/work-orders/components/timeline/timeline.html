@@ -22,6 +22,13 @@
             }
         </div>
 
+        @if (currentTimeLinePosition() !== null) {
+            <div
+                class="current-time-line"
+                [style.left.px]="currentTimeLinePosition()"
+            ></div>
+        }
+
         @for (center of workCenters(); track center.docId) {
             <div class="timeline-row">
                 <div class="grid-cells-layer">
